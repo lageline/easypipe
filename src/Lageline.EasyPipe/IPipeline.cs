@@ -1,8 +1,11 @@
-﻿namespace Lageline.EasyPipe;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
-
-public interface IPipeline
+namespace Lageline.EasyPipe
 {
-    Task ExecuteAsync<TParmaters>(TParmaters parameters);
-    Task ExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken);
+    public interface IPipeline
+    {
+        Task ExecuteAsync<TParmaters>(TParmaters parameters);
+        Task ExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken);
+    }
 }

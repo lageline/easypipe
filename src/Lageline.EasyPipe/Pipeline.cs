@@ -1,38 +1,43 @@
-namespace Lageline.EasyPipe;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-internal class Pipeline: IPipeline
-{   
-    private StepBase[] pipelineSteps;
+namespace Lageline.EasyPipe
+{
+    internal class Pipeline: IPipeline
+    {   
+        private StepBase[] pipelineSteps;
 
-    public Pipeline(StepBase[] pipelineSteps)
-    {
-        this.pipelineSteps = pipelineSteps; 
-    }
-    public async Task ExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
-    {
-        for(int i = 0; i<pipelineSteps.Length; i++)
+        public Pipeline(StepBase[] pipelineSteps)
         {
-            var step = pipelineSteps[i];
-            try
+            this.pipelineSteps = pipelineSteps; 
+        }
+        public async Task ExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
+        {
+            for(int i = 0; i<pipelineSteps.Length; i++)
             {
-                if(await step.ExecuteAsync(parameters, cancellationToken).ConfigureAwait(false))
-                    return;
-            }
-            catch(Exception e)
-            {
-                throw CreatePipelineException(i, step, e);
+                var step = pipelineSteps[i];
+                try
+                {
+                    if(await step.ExecuteAsync(parameters, cancellationToken).ConfigureAwait(false))
+                        return;
+                }
+                catch(Exception e)
+                {
+                    throw CreatePipelineException(i, step, e);
+                }
             }
         }
-    }
 
-    public Task ExecuteAsync<TParmaters>(TParmaters parameters)
-    {
-        return ExecuteAsync(parameters,CancellationToken.None);
-    }
+        public Task ExecuteAsync<TParmaters>(TParmaters parameters)
+        {
+            return ExecuteAsync(parameters,CancellationToken.None);
+        }
 
-    private PipelineException CreatePipelineException(int currentIndex, StepBase currentStep, Exception innerException)
-    {
-         var message = $"Exception during pipeline execution step {1} type {currentStep.GetType().Name}";
-         throw new PipelineException(message, innerException);
+        private PipelineException CreatePipelineException(int currentIndex, StepBase currentStep, Exception innerException)
+        {
+            var message = $"Exception during pipeline execution step {currentIndex} type {currentStep.GetType().Name}";
+            throw new PipelineException(message, innerException);
+        }
     }
 }
