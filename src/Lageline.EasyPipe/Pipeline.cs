@@ -19,7 +19,9 @@ namespace Lageline.EasyPipe
                 var step = pipelineSteps[i];
                 try
                 {
-                    if(await step.ExecuteAsync(parameters, cancellationToken).ConfigureAwait(false))
+                    var context = new PipelineContext();
+                    await step.OnExecuteAsync(parameters, context, cancellationToken).ConfigureAwait(false);
+                    if(context.SignalExit)
                         return;
                 }
                 catch(Exception e)
@@ -39,5 +41,11 @@ namespace Lageline.EasyPipe
             var message = $"Exception during pipeline execution step {currentIndex} type {currentStep.GetType().Name}";
             throw new PipelineException(message, innerException);
         }
+    }
+
+    public class PipelineContext
+    {
+        //Set to true to tell the pipelien to exit after current step.
+        public bool SignalExit { get; set; }
     }
 }

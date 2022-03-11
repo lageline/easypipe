@@ -12,7 +12,7 @@ await pipeline.ExecuteAsync("You", CancellationToken.None);
 
 class MyStep1 : StepBase
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         Console.WriteLine("Hello from MyStep1");
         return Task.CompletedTask;
@@ -21,7 +21,7 @@ class MyStep1 : StepBase
 
 class MyStep2 : StepBase
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         Console.WriteLine("Hello from MyStep2");
         return Task.CompletedTask;
@@ -30,16 +30,16 @@ class MyStep2 : StepBase
  
 class MyExitingStep : StepBase
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
     {
-        SetExitPipeline();
+        context.SignalExit = true;
         return Task.CompletedTask;
     }
 }
 
 class MyFailingStep : StepBase
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         throw new Exception("Oh no from MyFailingStep");
     }
