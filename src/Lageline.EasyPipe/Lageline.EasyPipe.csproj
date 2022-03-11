@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Lageline.EasyPipe</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Jonas Lageson</Authors>
+    <Company>Lageline</Company>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
