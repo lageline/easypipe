@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 
 namespace Lageline.EasyPipe
 {
-    public abstract class StepBase 
+    public abstract class StepBase<TParameters> where TParameters: class
     {
-        public abstract Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context,  CancellationToken cancellationToken);
+        public abstract Task OnExecuteAsync(TParameters parameters, PipelineContext context,  CancellationToken cancellationToken);
+          
     }
 }
