@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F9E73E91-FA15-448A-9A9F-5E6F1AF6C7F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lageline.EasyPipe", "src\Lageline.EasyPipe\Lageline.EasyPipe.csproj", "{88682CC4-18F2-4FDB-A58B-A4CEE148BD37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8D7D68D6-A6BA-4C1E-B0F5-5321A28A41D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lageline.EasyPipe.Tests", "tests\Lageline.EasyPipe.Tests\Lageline.EasyPipe.Tests.csproj", "{941FA94D-4D06-472F-BA5B-750C688DC307}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D0B02979-4AD5-4E48-9FAC-4C73D1A39338}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldPipe", "samples\HelloWorldPipe\HelloWorldPipe.csproj", "{1BE298EF-5EBE-4DC2-9422-E0D0CD210262}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88682CC4-18F2-4FDB-A58B-A4CEE148BD37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88682CC4-18F2-4FDB-A58B-A4CEE148BD37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88682CC4-18F2-4FDB-A58B-A4CEE148BD37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88682CC4-18F2-4FDB-A58B-A4CEE148BD37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941FA94D-4D06-472F-BA5B-750C688DC307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941FA94D-4D06-472F-BA5B-750C688DC307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941FA94D-4D06-472F-BA5B-750C688DC307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941FA94D-4D06-472F-BA5B-750C688DC307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE298EF-5EBE-4DC2-9422-E0D0CD210262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE298EF-5EBE-4DC2-9422-E0D0CD210262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE298EF-5EBE-4DC2-9422-E0D0CD210262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE298EF-5EBE-4DC2-9422-E0D0CD210262}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88682CC4-18F2-4FDB-A58B-A4CEE148BD37} = {F9E73E91-FA15-448A-9A9F-5E6F1AF6C7F1}
+		{941FA94D-4D06-472F-BA5B-750C688DC307} = {8D7D68D6-A6BA-4C1E-B0F5-5321A28A41D2}
+		{1BE298EF-5EBE-4DC2-9422-E0D0CD210262} = {D0B02979-4AD5-4E48-9FAC-4C73D1A39338}
+	EndGlobalSection
+EndGlobal
