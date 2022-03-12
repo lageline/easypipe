@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 
 namespace Lageline.EasyPipe
 {
-    internal class Pipeline: IPipeline
+    internal class Pipeline<TParameters>: IPipeline<TParameters> where TParameters:class
     {   
-        private StepBase[] pipelineSteps;
+        private StepBase<TParameters>[] pipelineSteps;
 
-        public Pipeline(StepBase[] pipelineSteps)
+        public Pipeline(StepBase<TParameters>[] pipelineSteps)
         {
             this.pipelineSteps = pipelineSteps; 
         }
-        public async Task ExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken)
+        public async Task ExecuteAsync(TParameters parameters, CancellationToken cancellationToken)
         {
             for(int i = 0; i<pipelineSteps.Length; i++)
             {
@@ -31,12 +31,12 @@ namespace Lageline.EasyPipe
             }
         }
 
-        public Task ExecuteAsync<TParmaters>(TParmaters parameters)
+        public Task ExecuteAsync(TParameters parameters)
         {
             return ExecuteAsync(parameters,CancellationToken.None);
         }
 
-        private PipelineException CreatePipelineException(int currentIndex, StepBase currentStep, Exception innerException)
+        private PipelineException CreatePipelineException(int currentIndex, StepBase<TParameters> currentStep, Exception innerException)
         {
             var message = $"Exception during pipeline execution step {currentIndex} type {currentStep.GetType().Name}";
             throw new PipelineException(message, innerException);

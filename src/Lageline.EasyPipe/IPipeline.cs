@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Lageline.EasyPipe
 {
-    public interface IPipeline
+    public interface IPipeline<TParameters> where TParameters:class
     {
-        Task ExecuteAsync<TParmaters>(TParmaters parameters);
-        Task ExecuteAsync<TParmaters>(TParmaters parameters, CancellationToken cancellationToken);
+        Task ExecuteAsync(TParameters parameters);
+        Task ExecuteAsync(TParameters parameters, CancellationToken cancellationToken);
     }
 }

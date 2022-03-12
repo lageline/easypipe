@@ -1,45 +1,47 @@
 ﻿using Lageline.EasyPipe;
 
-var pipeline = new PipelineBuilder()
+var pipeline = new PipelineBuilder<testParmam>()
     .AddStep(new MyStep1())
     .AddStep(new MyStep2())
+    .AddStep(new MyExitingStep())
     .AddStep(new MyFailingStep())
     .Build();
 
+await pipeline.ExecuteAsync(new testParmam("hello"), CancellationToken.None);
 
-await pipeline.ExecuteAsync("You", CancellationToken.None);
 
-
-class MyStep1 : StepBase
+record testParmam(string hello);
+class MyStep1 : StepBase<testParmam>
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         Console.WriteLine("Hello from MyStep1");
         return Task.CompletedTask;
     }
 }
 
-class MyStep2 : StepBase
+class MyStep2: StepBase<testParmam>
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
-        Console.WriteLine("Hello from MyStep2");
+        Console.WriteLine($"Hello from MyStep2 getting \"{parameters.hello}\" from parameters");
         return Task.CompletedTask;
     }
 }
- 
-class MyExitingStep : StepBase
+
+class MyExitingStep : StepBase<testParmam>
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
+        Console.WriteLine($"Hello from MyExitingStep. Pipeline will exit after this step even when more steps exists");
         context.SignalExit = true;
         return Task.CompletedTask;
     }
 }
 
-class MyFailingStep : StepBase
+class MyFailingStep : StepBase<testParmam>
 {
-    public override Task OnExecuteAsync<TParmaters>(TParmaters parameters, PipelineContext context, CancellationToken cancellationToken)
+    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         throw new Exception("Oh no from MyFailingStep");
     }
