@@ -36,6 +36,6 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release --no-build -o:package
     - name: Push generated package to GitHub registry
+      if:  github.ref == 'refs/heads/main'
       run: dotnet nuget push ./package/*.nupkg  --source https://nuget.pkg.github.com/lageline/index.json   --api-key ${{ github.token }}
     
-
