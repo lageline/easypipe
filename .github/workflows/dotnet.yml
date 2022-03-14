@@ -12,14 +12,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.11
+      with:
+        versionSpec: '5.x'
     - name: Restore dependencies
       run: dotnet restore
+    - name: Update version info
+      uses: gittools/actions/gitversion/execute@v0.9.11
+      with:
+        additionalArguments: /updateprojectfiles
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --configuration Release --no-build --verbosity normal
+    - name: Pack
+      run: dotnet pack --configuration Release --no-build -o:package
+    - name: Push generated package to GitHub registry
+      if:  github.ref == 'refs/heads/main'
+      run: dotnet nuget push ./package/*.nupkg  --source https://nuget.pkg.github.com/lageline/index.json   --api-key ${{ github.token }}
+    
