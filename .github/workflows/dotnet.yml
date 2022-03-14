@@ -25,7 +25,8 @@ jobs:
       run: dotnet restore
     - name: Update version info
       uses: gittools/actions/gitversion/execute@v0.9.11
-      additionalArguments: /updateprojectfiles
+      with:
+        additionalArguments: /updateprojectfiles
     - name: Build
       run: dotnet build --no-restore
     - name: Test
