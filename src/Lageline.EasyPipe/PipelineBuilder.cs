@@ -2,13 +2,13 @@ using System.Collections.Generic;
 
 namespace Lageline.EasyPipe
 {
-    public interface IPipelineBuilder<TParameters> where TParameters:class
+    public interface IPipelineBuilder<TParameters> where TParameters: class
     {
         PipelineBuilder<TParameters> AddStep(StepBase<TParameters> step);
         IPipeline<TParameters> Build();
     }
 
-    public class PipelineBuilder<TParameters> : IPipelineBuilder<TParameters> where TParameters:class
+    public class PipelineBuilder<TParameters> : IPipelineBuilder<TParameters> where TParameters: class
     {
         private List<StepBase<TParameters>> steps = new List<StepBase<TParameters>>();
         public PipelineBuilder<TParameters> AddStep(StepBase<TParameters> step)
@@ -18,7 +18,9 @@ namespace Lageline.EasyPipe
         }
         public IPipeline<TParameters> Build()
         {
-            return new Pipeline<TParameters>(steps.ToArray());
+            var pipeline = new Pipeline<TParameters>(steps.ToArray());
+            steps.Clear();
+            return pipeline;
         }
     }
 }

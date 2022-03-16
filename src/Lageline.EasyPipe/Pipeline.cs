@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Lageline.EasyPipe
 {
-    internal class Pipeline<TParameters>: IPipeline<TParameters> where TParameters:class
+    internal class Pipeline<TParameters>: IPipeline<TParameters> where TParameters: class
     {   
         private StepBase<TParameters>[] pipelineSteps;
 
