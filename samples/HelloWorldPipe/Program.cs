@@ -2,7 +2,12 @@
 
 var pipeline = new PipelineBuilder<testParmam>()
     .AddStep(new MyStep1())
-    .AddStep(new MyStep2())
+    .AddStep((parms, context) => Console.WriteLine($"An inline step"))
+    .AddStep(async (parms, context) =>
+    {
+        Console.WriteLine($"An async inline step");
+        await Task.Delay(500);
+    })
     .AddStep(new MyExitingStep())
     .AddStep(new MyFailingStep())
     .Build();

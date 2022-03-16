@@ -6,9 +6,9 @@ namespace Lageline.EasyPipe
 {
     internal class Pipeline<TParameters>: IPipeline<TParameters> where TParameters:class
     {   
-        private StepBase<TParameters>[] pipelineSteps;
+        private Func<TParameters, PipelineContext, CancellationToken, Task>[] pipelineSteps;
 
-        public Pipeline(StepBase<TParameters>[] pipelineSteps)
+        public Pipeline(Func<TParameters, PipelineContext, CancellationToken, Task>[] pipelineSteps)
         {
             this.pipelineSteps = pipelineSteps; 
         }
@@ -20,7 +20,7 @@ namespace Lageline.EasyPipe
                 try
                 {
                     var context = new PipelineContext();
-                    await step.OnExecuteAsync(parameters, context, cancellationToken).ConfigureAwait(false);
+                    await step(parameters, context, cancellationToken).ConfigureAwait(false);
                     if(context.SignalExit)
                         return;
                 }
@@ -36,7 +36,7 @@ namespace Lageline.EasyPipe
             return ExecuteAsync(parameters,CancellationToken.None);
         }
 
-        private PipelineException CreatePipelineException(int currentIndex, StepBase<TParameters> currentStep, Exception innerException)
+        private PipelineException CreatePipelineException(int currentIndex, Func<TParameters, PipelineContext, CancellationToken, Task> currentStep, Exception innerException)
         {
             var message = $"Exception during pipeline execution step {currentIndex} type {currentStep.GetType().Name}";
             throw new PipelineException(message, innerException);
@@ -45,7 +45,8 @@ namespace Lageline.EasyPipe
 
     public class PipelineContext
     {
-        //Set to true to tell the pipelien to exit after current step.
         public bool SignalExit { get; set; }
+
+        public string Name { get; set; }
     }
 }
