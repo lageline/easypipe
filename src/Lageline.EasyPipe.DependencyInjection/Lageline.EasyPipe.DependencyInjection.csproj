@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Lageline.EasyPipe.DependencyInjection</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Jonas Lageson</Authors>
+    <Company>Lageline</Company>
+    <RepositoryUrl>https://github.com/lageline/easypipe.git</RepositoryUrl> 
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lageline.EasyPipe\Lageline.EasyPipe.csproj" />
   </ItemGroup>
@@ -9,7 +16,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+   
   </PropertyGroup>
 
 </Project>
