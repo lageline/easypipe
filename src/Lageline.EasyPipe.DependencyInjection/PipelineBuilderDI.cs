@@ -10,7 +10,7 @@ namespace Lageline.EasyPipe.DependencyInjection
         {
             this.services = services;
         }
-        public PipelineBuilderDI<TParameters> AddStep<TType>() where TType : StepBase<TParameters> 
+        public PipelineBuilderDI<TParameters> AddStep<TType>() where TType : IStep<TParameters> 
         {
             var instance = services.GetRequiredService<TType>();
             base.AddStep(instance);

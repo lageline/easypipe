@@ -32,7 +32,7 @@ class MyParameters
 }
 
 
-class MyStep1 : StepBase<MyParameters>
+class MyStep1 : IStep<MyParameters>
 {
     private ILogger<MyStep1> logger;
 
@@ -40,14 +40,14 @@ class MyStep1 : StepBase<MyParameters>
     {
         this.logger = logger;
     }
-    public override Task OnExecuteAsync(MyParameters parameters, PipelineContext context, CancellationToken cancellationToken)
+    public Task OnExecuteAsync(MyParameters parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         logger.LogInformation("Hello from MyStep1, no answer from me");
         return Task.CompletedTask;
     }
 }
 
-class MyStep2: StepBase<MyParameters>
+class MyStep2: IStep<MyParameters>
 {
     private readonly ILogger<MyStep2> logger;
 
@@ -55,7 +55,7 @@ class MyStep2: StepBase<MyParameters>
     {
        this.logger = logger;
     }
-    public override Task OnExecuteAsync(MyParameters parameters, PipelineContext context, CancellationToken cancellationToken)
+    public Task OnExecuteAsync(MyParameters parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         logger.LogInformation("Hello from MyStep2, I've got an answer");
         parameters.Answer = "42";

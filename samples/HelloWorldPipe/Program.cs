@@ -16,27 +16,27 @@ await pipeline.ExecuteAsync(new testParmam("hello"), CancellationToken.None);
 
 
 record testParmam(string hello);
-class MyStep1 : StepBase<testParmam>
+class MyStep1 : IStep<testParmam>
 {
-    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
+    public Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         Console.WriteLine("Hello from MyStep1");
         return Task.CompletedTask;
     }
 }
 
-class MyStep2: StepBase<testParmam>
+class MyStep2: IStep<testParmam>
 {
-    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
+    public Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         Console.WriteLine($"Hello from MyStep2 getting \"{parameters.hello}\" from parameters");
         return Task.CompletedTask;
     }
 }
 
-class MyExitingStep : StepBase<testParmam>
+class MyExitingStep : IStep<testParmam>
 {
-    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
+    public Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         Console.WriteLine($"Hello from MyExitingStep. Pipeline will exit after this step even when more steps exists");
         context.SignalExit = true;
@@ -44,9 +44,9 @@ class MyExitingStep : StepBase<testParmam>
     }
 }
 
-class MyFailingStep : StepBase<testParmam>
+class MyFailingStep : IStep<testParmam>
 {
-    public override Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
+    public Task OnExecuteAsync(testParmam parameters, PipelineContext context, CancellationToken cancellationToken)
     {
         throw new Exception("Oh no from MyFailingStep");
     }

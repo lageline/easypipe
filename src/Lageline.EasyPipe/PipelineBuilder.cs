@@ -7,14 +7,14 @@ namespace Lageline.EasyPipe
 {
     public interface IPipelineBuilder<TParameters> where TParameters: class
     {
-        PipelineBuilder<TParameters> AddStep(StepBase<TParameters> step);
+        PipelineBuilder<TParameters> AddStep(IStep<TParameters> step);
         IPipeline<TParameters> Build();
     }
 
     public class PipelineBuilder<TParameters> : IPipelineBuilder<TParameters> where TParameters: class
     {
         private List<Func<TParameters, PipelineContext, CancellationToken, Task>> steps = new List<Func<TParameters, PipelineContext, CancellationToken, Task>>();
-        public PipelineBuilder<TParameters> AddStep(StepBase<TParameters> step)
+        public PipelineBuilder<TParameters> AddStep(IStep<TParameters> step)
         {
             steps.Add(new Func<TParameters, PipelineContext, CancellationToken, Task>(step.OnExecuteAsync));
             return this;
